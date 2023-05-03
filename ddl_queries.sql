@@ -1,22 +1,40 @@
-CREATE DATABASE demo1;
-USE demo1;
+CREATE DATABASE open_source_finder;
+USE open_source_finder;
+
+
 
 CREATE TABLE IF NOT EXISTS repository (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  description VARCHAR(255),
-  dependencies_count INT,
-  total_releases INT,
-  first_release VARCHAR(50),
+  name VARCHAR(255),
+  description VARCHAR(2000),
+  latest_release_number VARCHAR(255),
+  latest_release_published_at VARCHAR(255),
+  homepage VARCHAR(255),
+  package_manager_url VARCHAR(255),
+  latest_download_url VARCHAR(255),
+  rank_ INT,
   stars INT,
   forks INT,
-  language VARCHAR(50),
-  latest_download_url VARCHAR(255),
-  latest_release_number INT,
-  size VARCHAR(50),
   platform_id INT,
-  created_at DATETIME,
-  updated_at DATETIME
+  dependencies_count INT,
+  
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP
 );
+
+ALTER TABLE repository
+ADD CONSTRAINT platform_id
+FOREIGN KEY (platform_id) REFERENCES platform(id);
+
+CREATE TABLE IF NOT EXISTS platform (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    project_count INT,
+    homepage VARCHAR(255)
+);
+
+
+
 
 CREATE TABLE IF NOT EXISTS contributor (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,38 +51,7 @@ CREATE TABLE IF NOT EXISTS license (
   name VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS repository_version (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  number FLOAT,
-  published_at DATETIME,
-  repository_id INT,
- FOREIGN KEY (repository_id) REFERENCES repository(id)
-);
-
-CREATE TABLE IF NOT EXISTS platform (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(255),
-  url VARCHAR(255)
-);
-
-ALTER TABLE repository
-ADD CONSTRAINT platform_id
-FOREIGN KEY (platform_id) REFERENCES platform(id);
-
-CREATE TABLE IF NOT EXISTS keyword (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  word VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS contributed_by (
-  repository_id INT,
-  contributor_id INT,
-  PRIMARY KEY (repository_id, contributor_id),
-  FOREIGN KEY (repository_id) REFERENCES repository(id),
-  FOREIGN KEY (contributor_id) REFERENCES contributor(id)
-);
-
-CREATE TABLE IF NOT EXISTS has_license (
+CREATE TABLE IF NOT EXISTS repository_license (
   repository_id INT,
   license_id INT,
   PRIMARY KEY (repository_id, license_id),
@@ -72,7 +59,12 @@ CREATE TABLE IF NOT EXISTS has_license (
   FOREIGN KEY (license_id) REFERENCES license(id)
 );
 
-CREATE TABLE IF NOT EXISTS contains_keywords (
+CREATE TABLE IF NOT EXISTS keyword (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  word VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS repository_keyword (
   repository_id INT,
   keyword_id INT,
   PRIMARY KEY (repository_id, keyword_id),
@@ -80,7 +72,8 @@ CREATE TABLE IF NOT EXISTS contains_keywords (
   FOREIGN KEY (keyword_id) REFERENCES keyword(id)
 );
 
-CREATE TABLE IF NOT EXISTS depends_on (
+
+CREATE TABLE IF NOT EXISTS repository_dependency (
   dependent_id INT,
   dependee_id INT,
   PRIMARY KEY (dependent_id, dependee_id),
