@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { repositoryAtom } from "../atoms";
 import {
   GridItem,
   HStack,
@@ -16,14 +14,29 @@ import {
   Stats,
   Tags,
 } from "../components/RepositoryDetails";
+import { getRepoById } from "../http";
+import { IRepository } from "../types";
 
 type RepositoryDetailsProps = {};
 
 const RepositoryDetails: React.FC<RepositoryDetailsProps> = () => {
-  const { name: repoName } = useParams();
-  const { allRepositories } = useRecoilValue(repositoryAtom);
+  const { id: repoId } = useParams();
+  const [repo, setRepo] = useState<IRepository | null>(null);
 
-  const repo = allRepositories.find((r) => r.name === repoName);
+  const fetchRepo = async () => {
+    try {
+      const { data } = await getRepoById(Number(repoId));
+      setRepo(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchRepo();
+  }, []);
+
+  // const repo = allRepositories.find((r) => r.name === repoName);
   if (!repo) return <Heading>Loading...</Heading>;
 
   return (
@@ -58,7 +71,7 @@ const RepositoryDetails: React.FC<RepositoryDetailsProps> = () => {
           <Heading
             fontWeight={"semibold"}
             fontSize={"3xl"}
-          >{`Rank ${repo.rank}`}</Heading>
+          >{`Rank ${repo.rank_}`}</Heading>
           <Stack px={6}>
             {repo.stars && <Stats title={"Stars"} number={repo.stars} />}
             {repo.forks && <Stats title={"Forks"} number={repo.forks} />}

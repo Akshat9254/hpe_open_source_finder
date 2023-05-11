@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS
 # from elasticsearch import Elasticsearch
 
 # es = Elasticsearch(hosts=["http://127.0.0.1:9200"])
@@ -6,6 +7,7 @@ from flask import Flask, request
 # print(f"Connected to ElasticSearch cluster `{es.info().body['cluster_name']}`")
 
 app = Flask(__name__)
+CORS(app)
 
 MAX_SIZE = 15
 

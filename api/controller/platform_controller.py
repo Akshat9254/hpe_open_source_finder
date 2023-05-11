@@ -1,9 +1,9 @@
 from app import app
-from dao.platform_dao import platform_dao
+from service.platform_service import platform_service
 
-platform_dao = platform_dao()
+platform_service = platform_service()
 
 
 @app.route("/platform", methods=["GET"])
 def get_platforms():
-    return platform_dao.get_all_platforms()
+    return platform_service.get_all_platforms()

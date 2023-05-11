@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navbar } from "./components";
-import { Home, RepositoryDetails, SearchResults } from "./pages";
+import { Home, MyProjects, RepositoryDetails, SearchResults } from "./pages";
 import { Container } from "@chakra-ui/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { platformAtom, repositoryAtom, searchAtom } from "./atoms";
@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import useDebounce from "./hooks/useDebounce";
 
 function App() {
-  const { keyword } = useRecoilValue(searchAtom);
+  const { keyword, ref } = useRecoilValue(searchAtom);
   const { selectedPlatforms, loading: platformLoading } =
     useRecoilValue(platformAtom);
   const { loading: repositoryLoading } = useRecoilValue(repositoryAtom);
@@ -30,6 +30,12 @@ function App() {
     } catch (error) {
       console.log(error);
       setRepositoryState((prev) => ({ ...prev, loading: false }));
+    } finally {
+      if (ref?.current) {
+        console.log(ref.current);
+
+        ref.current.focus();
+      }
     }
   };
 
@@ -45,7 +51,8 @@ function App() {
       <Container maxW={"container.xl"} mt={8}>
         <Routes>
           <Route path={"/"} element={<SearchResults />} />
-          <Route path={"/repository/:name"} element={<RepositoryDetails />} />
+          <Route path={"/repository/:id"} element={<RepositoryDetails />} />
+          <Route path={"/project/:userId"} element={<MyProjects />} />
           <Route path={"/search"} element={<Home />} />
         </Routes>
       </Container>

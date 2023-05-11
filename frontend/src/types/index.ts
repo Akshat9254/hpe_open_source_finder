@@ -1,4 +1,5 @@
 export interface IRepository {
+  id: number;
   dependent_repos_count: number;
   dependents_count: number;
   deprecation_reason: string | null;
@@ -18,7 +19,7 @@ export interface IRepository {
   normalized_licenses: string[];
   package_manager_url: string;
   platform: string;
-  rank: number;
+  rank_: number;
   repository_license: string;
   repository_status: string | null;
   repository_url: string;
@@ -42,4 +43,9 @@ export interface IPlatform {
   homepage: string;
   color: string;
   default_language: string;
+}
+
+export interface ILicense {
+  id: number;
+  name: string;
 }

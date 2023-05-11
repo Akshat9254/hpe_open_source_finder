@@ -21,7 +21,7 @@ const Repository: React.FC<RepositoryProps> = ({ repo }) => {
     <Card
       variant={"elevated"}
       cursor={"pointer"}
-      onClick={() => navigate(`/repository/${repo.name}`)}
+      onClick={() => navigate(`/repository/${repo.id}`)}
     >
       <CardHeader>
         <Heading size="md">{repo.name}</Heading>
@@ -32,9 +32,7 @@ const Repository: React.FC<RepositoryProps> = ({ repo }) => {
       <CardFooter>
         <Text fontSize={"sm"}>{`Latest Stable Release ${
           repo.latest_release_number
-        } - Updated ${formatDate(
-          repo.latest_stable_release_published_at
-        )}`}</Text>
+        } - Updated ${formatDate(repo.latest_release_published_at)}`}</Text>
       </CardFooter>
     </Card>
   );

@@ -40,6 +40,11 @@ class platform_dao():
             return "no platforms found"
 
     def get_all_platforms(self):
-        self.cur.execute("SELECT * FROM platform")
-        result = self.cur.fetchall()
-        return json.dumps(result)
+        self.cur.execute("SELECT * FROM platform LIMIT 10")
+        return self.cur.fetchall()
+
+    def find_by_name(self, name):
+        self.cur.execute(f"SELECT * FROM platform WHERE name = '{name}'")
+        result = self.cur.fetchone()
+        self.cur.fetchall()
+        return result

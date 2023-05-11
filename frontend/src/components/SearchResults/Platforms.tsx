@@ -52,9 +52,9 @@ const Platforms: React.FC<PlatformsProps> = () => {
       <Divider />
       <CardBody>
         <Stack>
-          {allPlatforms.map((platform) => (
+          {allPlatforms.map((platform, index) => (
             <Checkbox
-              key={platform.name}
+              key={index}
               onChange={() => addPlatform(platform)}
               isChecked={selectedPlatforms.has(platform)}
             >
