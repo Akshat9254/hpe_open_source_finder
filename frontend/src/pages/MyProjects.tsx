@@ -41,7 +41,7 @@ const MyProjects: React.FC<MyProjectsProps> = () => {
       <GridItem colSpan={1}>
         <Card variant={"outline"}>
           <CardHeader backgroundColor={"gray.700"}>
-            <Heading size={"md"}>{"My Projects"}</Heading>
+            <Heading size={"md"}>{"Projects"}</Heading>
           </CardHeader>
           <CardBody>
             <Stack divider={<StackDivider />}>
