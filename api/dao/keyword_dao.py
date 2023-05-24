@@ -14,7 +14,7 @@ class keyword_dao():
             self.con.autocommit = True
             self.cur = self.con.cursor(dictionary=True)
         except:
-            print("Connection failed")
+            print("kewyord_dao Connection failed")
 
     def find_by_name(self, name):
         query = f"SELECT * FROM keyword WHERE word = '{name}'"
@@ -22,6 +22,11 @@ class keyword_dao():
         result = self.cur.fetchone()
         self.cur.fetchall()
         return result
+
+    def find_all(self):
+        query = f"SELECT word FROM keyword"
+        self.cur.execute(query)
+        return self.cur.fetchall()
 
     def save(self, word):
         query = f"INSERT INTO keyword(word) VALUES ('{word}')"

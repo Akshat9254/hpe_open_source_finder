@@ -14,7 +14,7 @@ class repository_dao():
             self.con.autocommit = True
             self.cur = self.con.cursor(dictionary=True)
         except:
-            print("Connection failed")
+            print("repository_dao Connection failed")
 
     def get_repositories_by_keywords(self, keywords):
         placeholders = ', '.join(['%s'] * len(keywords))

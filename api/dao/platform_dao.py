@@ -16,7 +16,7 @@ class platform_dao():
             self.cur = self.con.cursor(dictionary=True)
             print("connection successful")
         except:
-            print("Connection failed")
+            print("platform_dao Connection failed")
 
     def hello(self):
         return "hello"

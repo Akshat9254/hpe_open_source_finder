@@ -14,7 +14,7 @@ class project_dao():
             self.con.autocommit = True
             self.cur = self.con.cursor(dictionary=True)
         except:
-            print("Connection failed")
+            print("project_dao Connection failed")
 
     def find_by_user_id(self, user_id):
         query = f"SELECT * FROM project WHERE owner_id = {user_id}"
@@ -37,5 +37,3 @@ class project_dao():
     def add_project_repository(self, project_id, repository_id):
         query = f"INSERT INTO project_repository(project_id, repository_id) VALUES({project_id}, {repository_id})"
         self.cur.execute(query)
-
-    

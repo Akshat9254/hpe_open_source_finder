@@ -14,7 +14,7 @@ class license_dao():
             self.con.autocommit = True
             self.cur = self.con.cursor(dictionary=True)
         except:
-            print("Connection failed")
+            print("license_dao Connection failed")
 
     def find_by_name(self, name):
         query = f"SELECT * FROM license WHERE name = '{name}'"
@@ -22,7 +22,7 @@ class license_dao():
         result = self.cur.fetchone()
         self.cur.fetchall()
         return result
-    
+
     def find_all(self):
         query = f"SELECT * FROM license LIMIT 10"
         self.cur.execute(query)

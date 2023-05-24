@@ -1,25 +1,15 @@
 import axios from "axios";
 // const API_KEY = "24e2ede14665b0c6c80b86ad839e7f8c";
 
-export const api = axios.create({
-  baseURL: "http://127.0.0.1:5000/",
-});
+export const api = axios.create({});
 
-// export const getRepositories = async (query: string[], platform: string[]) =>
-//   api.get("/repository", {
-//     params: {
-//       api_key: API_KEY,
-//       ...(platform && platform.length ? { platform: platform.join(",") } : {}),
-//       q: query.join(","),
-//       per_page: "5",
-//     },
-//   });
 export const getRepositories = async (query: string[], platform: string[]) =>
   api.get("/repository/all", {
     params: {
-      ...(platform && platform.length ? { platform: platform.join(",") } : {}),
-      keywords: query.join(","),
-      per_page: "5",
+      // ...(platform && platform.length ? { platform: platform.join(",") } : {}),
+      ...(query && query.length && query[0]
+        ? { keywords: query.join(",") }
+        : {}),
     },
   });
 

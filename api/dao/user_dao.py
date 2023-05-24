@@ -14,7 +14,7 @@ class user_dao():
             self.con.autocommit = True
             self.cur = self.con.cursor(dictionary=True)
         except:
-            print("Connection failed")
+            print("user_dao Connection failed")
 
     def find_by_email(self, email):
         query = f"SELECT * FROM user WHERE email = '{email}'"
@@ -26,5 +26,3 @@ class user_dao():
     def save(self, name, email, password):
         query = f"INSERT INTO user(name, email, password) VALUES ('{name}', '{email}', '{password}')"
         self.cur.execute(query)
-
-    

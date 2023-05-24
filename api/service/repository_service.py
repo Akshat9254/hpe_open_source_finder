@@ -4,6 +4,8 @@ from dao.keyword_dao import keyword_dao
 from dao.license_dao import license_dao
 from config.config import api_config
 
+from utils import fuzzy
+
 from service.platform_service import platform_service
 
 platform_service = platform_service()
@@ -14,13 +16,18 @@ license_dao = license_dao()
 
 class repository_service():
     def search_by_keywords(self, keywords):
+        if len(keywords) == 0:
+            db_keyords = keyword_dao.find_all()
+            db_keyords = [row['word'] for row in db_keyords]
+            keywords = db_keyords
+
         res = repository_dao.get_repositories_by_keywords(keywords)
         if len(res) == 0:
             self.insert_repositories(keywords)
         return repository_dao.get_repositories_by_keywords(keywords)
 
     def find_by_id(self, repo_id):
-        return  repository_dao.find_by_id(repo_id)
+        return repository_dao.find_by_id(repo_id)
 
     def insert_repositories(self, keywords):
         url = "https://libraries.io/api/search"
