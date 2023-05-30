@@ -10,6 +10,7 @@ import {
   Divider,
   Heading,
   Stack,
+  useColorMode,
 } from "@chakra-ui/react";
 import { IPlatform } from "../../types";
 
@@ -18,6 +19,7 @@ type PlatformsProps = {};
 const Platforms: React.FC<PlatformsProps> = () => {
   const [platformState, setPlatformState] = useRecoilState(platformAtom);
   const { allPlatforms, selectedPlatforms } = platformState;
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     const fetchPlatforms = async () => {
@@ -46,7 +48,7 @@ const Platforms: React.FC<PlatformsProps> = () => {
 
   return (
     <Card variant={"outline"} size={"sm"}>
-      <CardHeader bgColor={"gray.700"}>
+      <CardHeader bgColor={colorMode === "dark" ? "gray.700" : "gray.300"}>
         <Heading size="md">Platforms</Heading>
       </CardHeader>
       <Divider />

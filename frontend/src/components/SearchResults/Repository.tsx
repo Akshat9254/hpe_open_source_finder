@@ -22,6 +22,7 @@ const Repository: React.FC<RepositoryProps> = ({ repo }) => {
       variant={"elevated"}
       cursor={"pointer"}
       onClick={() => navigate(`/repository/${repo.id}`)}
+      shadow={"2xl"}
     >
       <CardHeader>
         <Heading size="md">{repo.name}</Heading>

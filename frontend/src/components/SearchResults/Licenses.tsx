@@ -7,6 +7,7 @@ import {
   Heading,
   Stack,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { getAllLicenses } from "../../http";
@@ -19,6 +20,8 @@ type LicensesProps = {};
 const Licenses: React.FC<LicensesProps> = () => {
   const [licenseState, setLicenseState] = useRecoilState(licenseAtom);
   const { allLicenses, selectedLicenses, loading } = licenseState;
+  const { colorMode } = useColorMode();
+
   const fetchAllLicenses = async () => {
     try {
       setLicenseState((prev) => ({ ...prev, loading: true }));
@@ -59,7 +62,7 @@ const Licenses: React.FC<LicensesProps> = () => {
 
   return (
     <Card variant={"outline"} size={"sm"}>
-      <CardHeader bgColor={"gray.700"}>
+      <CardHeader bgColor={colorMode === "dark" ? "gray.700" : "gray.300"}>
         <Heading size="md">Licenses</Heading>
       </CardHeader>
       <Divider />

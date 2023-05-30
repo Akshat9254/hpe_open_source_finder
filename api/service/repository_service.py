@@ -15,16 +15,20 @@ license_dao = license_dao()
 
 
 class repository_service():
-    def search_by_keywords(self, keywords):
+    def search_by_keywords(self, keywords, licenses):
         if len(keywords) == 0:
+            return repository_dao.get_repositories()
+        else:
             db_keyords = keyword_dao.find_all()
             db_keyords = [row['word'] for row in db_keyords]
-            keywords = db_keyords
-
-        res = repository_dao.get_repositories_by_keywords(keywords)
-        if len(res) == 0:
-            self.insert_repositories(keywords)
-        return repository_dao.get_repositories_by_keywords(keywords)
+            keywords = fuzzy.extract_top_n_words(db_keyords, keywords, n=5)
+            res = repository_dao.get_repositories_by_keywords(
+                keywords, licenses)
+            if len(res) > 0:
+                return res
+            else:
+                self.insert_repositories(keywords)
+                return repository_dao.get_repositories_by_keywords(keywords, licenses)
 
     def find_by_id(self, repo_id):
         return repository_dao.find_by_id(repo_id)

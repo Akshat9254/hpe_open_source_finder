@@ -3,12 +3,15 @@ import axios from "axios";
 
 export const api = axios.create({});
 
-export const getRepositories = async (query: string[], platform: string[]) =>
+export const getRepositories = async (query: string[], licenses: string[]) =>
   api.get("/repository/all", {
     params: {
       // ...(platform && platform.length ? { platform: platform.join(",") } : {}),
       ...(query && query.length && query[0]
         ? { keywords: query.join(",") }
+        : {}),
+      ...(licenses && licenses.length && licenses[0]
+        ? { licenses: licenses.join(",") }
         : {}),
     },
   });

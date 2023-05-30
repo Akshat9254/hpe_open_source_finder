@@ -11,8 +11,10 @@ repository_service = repository_service()
 @app.route("/repository/all", methods=["GET"])
 def get_repositories_by_keywords():
     keywords = request.args.getlist('keywords')
-    res = repository_service.search_by_keywords(keywords)
+    licenses = request.args.getlist('licenses')
+    res = repository_service.search_by_keywords(keywords, licenses)
     return jsonify(res)
+
 
 @app.route("/repository", methods=["GET"])
 def get_repository_by_id():

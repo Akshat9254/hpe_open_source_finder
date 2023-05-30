@@ -8,8 +8,8 @@ type SearchOptionsProps = {};
 const SearchOptions: React.FC<SearchOptionsProps> = () => {
   return (
     <Stack gap={4}>
-      <Platforms />
       <Licenses />
+      <Platforms />
     </Stack>
   );
 };
